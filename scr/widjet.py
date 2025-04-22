@@ -1,4 +1,4 @@
-from masks import get_mask_card_number, get_mask_account
+from scr.masks import get_mask_card_number, get_mask_account
 
 
 def mask_account_card(number_card_or_account: str) -> str:
