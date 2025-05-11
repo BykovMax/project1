@@ -28,14 +28,3 @@ def sort_by_date(list_dict: List[Dict], reverse: bool = True) -> List[Dict]:
     :return: Новый список, отсортированный по дате.
     """
     return sorted(list_dict, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
-
-
-test_data = [
-    {"id": 1, "state": "EXECUTED", "date": "2024-04-01T10:00:00.000000"},
-    {"id": 2, "state": "CANCELED", "date": "2023-03-01T12:30:45.123456"},
-    {"id": 3, "state": "EXECUTED", "date": "2025-01-01T08:15:00.000000"},
-    {"id": 4, "date": "2022-05-01T09:00:00.000000"},  # без state
-]
-
-print(sort_by_date(test_data))
-print(filter_by_state(test_data))
