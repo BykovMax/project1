@@ -10,7 +10,7 @@ def filter_by_state(list_dict: List[Dict], state: str = "EXECUTED") -> List[Dict
     :param state: Значение, по которому фильтровать (по умолчанию 'EXECUTED').
     :return: Новый список отфильтрованных словарей.
     """
-    if state == None:
+    if state is None:
         state = "EXECUTED"
 
     new_list_dict = []  # Создаём пустой список для хранения результата

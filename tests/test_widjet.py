@@ -2,7 +2,6 @@ import pytest
 
 from scr.widjet import get_date, mask_account_card
 
-
 # =========================================
 # ====== Тесты для mask_account_card ======
 # =========================================
@@ -54,7 +53,7 @@ def test_mask_account_card_invalid(invalid_data):
 
 # =========================================
 # ====== Тесты для mask_account_card ======
-# ============================================
+# =========================================
 
 
 def test_get_date(iso_date):
