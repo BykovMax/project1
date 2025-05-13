@@ -3,7 +3,11 @@ import pytest
 from scr.widjet import get_date, mask_account_card
 
 
+# =========================================
 # ====== Тесты для mask_account_card ======
+# =========================================
+
+
 # Тест с фиксутрой для валидного номера карт.
 def test_mask_card_valid(number_card_indication):
     assert mask_account_card(number_card_indication) == "Maestro 1596 83** **** 5199"
@@ -48,7 +52,11 @@ def test_mask_account_card_invalid(invalid_data):
         mask_account_card(invalid_data)
 
 
+# =========================================
 # ====== Тесты для mask_account_card ======
+# ============================================
+
+
 def test_get_date(iso_date):
     assert get_date(iso_date) == "11.03.2024"
     assert get_date("2023-03-15T14:30:59.123456") == "15.03.2023"

@@ -3,7 +3,11 @@ import pytest
 from scr.masks import get_mask_account, get_mask_card_number
 
 
+# ============================================
 # ====== Тесты для get_mask_card_number ======
+# ============================================
+
+
 # Тест с фиксутрой для валидного номера карт.
 def test_get_mask_card_number(number_card):
     assert get_mask_card_number(number_card) == "7000 79** **** 6361"
@@ -26,7 +30,11 @@ def test_invalid_number_card(invalid_card):
         get_mask_card_number(invalid_card)
 
 
+# ========================================
 # ====== Тесты для get_mask_account ======
+# ========================================
+
+
 # Тест с фикстурой для валидного номер счета.
 def test_get_mask_account(number_account):
     assert get_mask_account(number_account) == "**4305"
