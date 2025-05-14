@@ -43,5 +43,5 @@ def get_mask_account(account_number: Union[int, str]) -> str:
         raise ValueError("Номер счета должен содержать только цифры.")
 
     # формирование маски счета.
-    mask_account = f"*{str_account[-4:]}"
+    mask_account = f"**{str_account[-4:]}"
     return mask_account
