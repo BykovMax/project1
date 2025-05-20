@@ -1,6 +1,6 @@
 import pytest
 
-from scr.generators import filter_by_currency, transaction_descriptions
+from scr.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 # ==========================================
 # ====== Тесты для filter_by_currency ======
@@ -70,3 +70,41 @@ def test_transaction_descriptions_no_key():
     ]
     with pytest.raises(KeyError):
         list(transaction_descriptions(transaction_without_description))
+
+
+# =============================================
+# ====== Тесты для card_number_generator ======
+# =============================================
+
+
+def test_card_number_generator_range():
+    result = list(card_number_generator(1, 5))
+    expected = [
+        "0000 0000 0000 0001",
+        "0000 0000 0000 0002",
+        "0000 0000 0000 0003",
+        "0000 0000 0000 0004",
+        "0000 0000 0000 0005",
+    ]
+    assert result == expected
+
+
+def test_card_number_generator_same_value(number_card):
+    result = list(card_number_generator(number_card, int(number_card)))
+    expected = ["7000 7922 8960 6361"]
+    assert result == expected
+
+
+def test_card_number_generator_incorrect_range():
+    with pytest.raises(ValueError):
+        list(card_number_generator(4, 1))  # Неверный диапазон
+
+
+def test_card_number_generator_out_of_bounds_start():
+    with pytest.raises(ValueError):
+        list(card_number_generator(-1, 10))  # Отрицательное число
+
+
+def test_card_number_generator_invalid(number_card):
+    with pytest.raises(ValueError):
+        list(card_number_generator(number_card, "70007922896063611"))  # Длина больше 16
