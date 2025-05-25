@@ -50,10 +50,6 @@ def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Itera
     start_int = int(start_str)
     end_int = int(end_str)
 
-    # Проверка положительных чисел
-    if start_int <= 0 or end_int <= 0:
-        raise ValueError("Номера карт должны быть положительными числами от 1 до 9999999999999999.")
-
     # Проверка на неправильный диапазон
     if start_int > end_int:
         raise ValueError("Начальное значение не может быть больше конечного.")
