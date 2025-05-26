@@ -1,5 +1,4 @@
 import pytest
-
 from scr.widjet import get_date, mask_account_card
 
 # =========================================

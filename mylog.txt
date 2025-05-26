@@ -1,0 +1,20 @@
+The card_number_generator ok
+
+The card_number_generator function returned an error.
+Error: ValueError.
+Inputs: (5, 4), {}
+
+The card_number_generator function returned an error.
+Error: ValueError.
+Inputs: (100, 10), {}
+
+The card_number_generator ok
+
+The card_number_generator function returned an error.
+Error: ValueError.
+Inputs: (5, 4), {}
+
+The card_number_generator function returned an error.
+Error: ValueError.
+Inputs: (100, 10), {}
+
