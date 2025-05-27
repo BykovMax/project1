@@ -1,6 +1,7 @@
 from datetime import datetime
-from scr.masks import get_mask_account, get_mask_card_number
+
 from scr.decorators import log
+from scr.masks import get_mask_account, get_mask_card_number
 
 
 # @log(filename="mylog.txt")
