@@ -1,11 +1,12 @@
 import functools
-from typing import Optional, Callable, Iterator
+from typing import Optional, Callable, Iterator, Any
 
-def log(filename: Optional[str] = None):
+def log(filename: Optional[str] = None) ->  Callable:
     """
     Декоратор логирует результат выполнения функции.
     Если аргумент filename передан, то записываются логи в файл, если нет — выводится в консоль.
-    При успехе: 'The function_name ok.'
+    Поддерживает обычные функции и генераторы.
+    При успехе: 'The function_name works.'
     При ошибке: 'The function_name function returned an error.
                  Error: <тип ошибки>.
                  Inputs: <args>, <kwargs>'
@@ -13,7 +14,7 @@ def log(filename: Optional[str] = None):
 
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             log_line = ""
             is_generator = False
 
@@ -23,11 +24,11 @@ def log(filename: Optional[str] = None):
                 if isinstance(result, Iterator):
                     is_generator = True
 
-                    def generator_wrapper():
+                    def generator_wrapper()-> Iterator[Any]:
                         try:
                             for value in result:
                                 yield value
-                            log_line_local = f"The {func.__name__} ok\n"
+                            log_line_local = f"The {func.__name__} works\n"
                         except Exception as e:
                             log_line_local = (
                                 f"The {func.__name__} function returned an error.\n"
@@ -44,7 +45,7 @@ def log(filename: Optional[str] = None):
 
                     return generator_wrapper()
                 else:
-                    log_line = f"The {func.__name__} ok\n"
+                    log_line = f"The {func.__name__} works\n"
                     return result
 
             except Exception as e:

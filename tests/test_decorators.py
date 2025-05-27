@@ -47,7 +47,7 @@ def test_generator_success(capsys):
     captured = capsys.readouterr()
 
     assert result == ["1234 5678 9012 3456"]
-    assert "The wrapped_generator ok" in captured.out
+    assert "The wrapped_generator works" in captured.out
 
 
 # ====== ГЕНЕРАТОР С ОШИБКОЙ ======

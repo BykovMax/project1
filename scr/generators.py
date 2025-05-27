@@ -27,7 +27,7 @@ def transaction_descriptions(transactions: List[Dict]) -> Iterator[str]:
         yield transaction["description"]
 
 
-@log(filename="mylog.txt")
+# @log(filename="mylog.txt")
 def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Iterator[str]:
     """
     Генератор номеров банковских карт в формате 'XXXX XXXX XXXX XXXX'.
@@ -62,6 +62,6 @@ def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Itera
         yield f"{card_str[:4]} {card_str[4:8]} {card_str[8:12]} {card_str[12:]}"
 
 
-if __name__ == "__main__":
-    for card_number in card_number_generator(1, 4):
-        print(card_number)
+# if __name__ == "__main__":
+#     for card_number in card_number_generator(5, 4):
+#         print(card_number)

@@ -3,7 +3,7 @@ from scr.masks import get_mask_account, get_mask_card_number
 from scr.decorators import log
 
 
-@log(filename="mylog.txt")
+# @log(filename="mylog.txt")
 def mask_account_card(number_card_or_account: str) -> str:
     """
     Принимает строку с номером карты или счета, определяет номер это или счет, накладывает нужную маску,
@@ -32,7 +32,7 @@ def mask_account_card(number_card_or_account: str) -> str:
         raise ValueError("Не удалось определить формат(карта или счет) или недопустимая длина")
 
 
-@log(filename="mylog.txt")
+# @log(filename="mylog.txt")
 def get_date(date_iso: str) -> str:
     """
     Принимает на вход строку с датой в формате "ГГГГ-ММ-ДДTЧЧ:ММ:СС.ffffff" (ISO формат).
@@ -55,8 +55,8 @@ def get_date(date_iso: str) -> str:
     return date.strftime("%d.%m.%Y")
 
 
-if __name__ == "__main__":
-    print(mask_account_card("Maestro 1596837868701959"))
-    print(mask_account_card("Maestro 1596837868701959"))
-    print(get_date("2023-03-15T14:30:59.123456"))
-    print(get_date("11.05.2025"))
+# if __name__ == "__main__":
+#     print(mask_account_card("Maestro 1596837868701959"))
+#     print(mask_account_card("Maestro 1596837868701959"))
+#     print(get_date("2023-03-15T14:30:59.123456"))
+#     print(get_date("11.05.2025"))
