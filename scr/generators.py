@@ -1,5 +1,7 @@
 from typing import Dict, Iterator, List, Union
 
+from scr.decorators import log
+
 
 def filter_by_currency(transaction: list[Dict], currency_code: str = "RUB") -> Iterator[Dict]:
     """
@@ -26,6 +28,7 @@ def transaction_descriptions(transactions: List[Dict]) -> Iterator[str]:
         yield transaction["description"]
 
 
+# @log(filename="mylog.txt")
 def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Iterator[str]:
     """
     Генератор номеров банковских карт в формате 'XXXX XXXX XXXX XXXX'.
@@ -50,10 +53,6 @@ def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Itera
     start_int = int(start_str)
     end_int = int(end_str)
 
-    # Проверка положительных чисел
-    if start_int <= 0 or end_int <= 0:
-        raise ValueError("Номера карт должны быть положительными числами от 1 до 9999999999999999.")
-
     # Проверка на неправильный диапазон
     if start_int > end_int:
         raise ValueError("Начальное значение не может быть больше конечного.")
@@ -62,3 +61,8 @@ def card_number_generator(start: Union[int, str], end: Union[int, str]) -> Itera
     for number in range(start_int, end_int + 1):
         card_str = f"{number:016d}"
         yield f"{card_str[:4]} {card_str[4:8]} {card_str[8:12]} {card_str[12:]}"
+
+
+# if __name__ == "__main__":
+#     for card_number in card_number_generator(5, 4):
+#         print(card_number)
