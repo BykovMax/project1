@@ -1,6 +1,9 @@
 from typing import Union
 
+from scr.decorators import log
 
+
+# @log(filename="mylog.txt")
 def get_mask_card_number(card_number: Union[int, str]) -> str:
     """
     Принимает номер карты из 16 цифр и возвращает в формате "XXXX XX** **** XXXX", где Х это цифра номера карты.
@@ -24,6 +27,7 @@ def get_mask_card_number(card_number: Union[int, str]) -> str:
     return mask_card
 
 
+# @log(filename="mylog.txt")
 def get_mask_account(account_number: Union[int, str]) -> str:
     """
     Принимает номер счета и скрывает его отображая в формате **XXXX, где Х это цифра номера.
@@ -45,3 +49,10 @@ def get_mask_account(account_number: Union[int, str]) -> str:
     # формирование маски счета.
     mask_account = f"**{str_account[-4:]}"
     return mask_account
+
+
+# if __name__ == "__main__":
+#     print(get_mask_account("8990922113665229"))
+#     print(get_mask_account("35383033474447895560"))
+#     print(get_mask_card_number(5999414228426353))
+#     print(get_mask_card_number(599941422842635))

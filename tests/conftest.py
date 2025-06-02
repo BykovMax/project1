@@ -85,3 +85,8 @@ def transactions():
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+@pytest.fixture
+def temp_log_file(tmp_path):
+    return tmp_path / "log.txt"
