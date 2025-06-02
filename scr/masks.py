@@ -1,6 +1,6 @@
 from typing import Union
 
-from scr.decorators import log
+# from scr.decorators import log
 
 
 # @log(filename="mylog.txt")

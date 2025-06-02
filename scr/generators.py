@@ -1,6 +1,6 @@
 from typing import Dict, Iterator, List, Union
 
-from scr.decorators import log
+# from scr.decorators import log
 
 
 def filter_by_currency(transaction: list[Dict], currency_code: str = "RUB") -> Iterator[Dict]:

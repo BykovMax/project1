@@ -1,5 +1,6 @@
 import json
-import os
+
+# import os
 from typing import Any
 
 
@@ -12,7 +13,7 @@ def read_operations_json(path: str) -> list[dict[str, Any]]:
     """
     try:
         with open(path, "r", encoding="utf-8") as f:
-            data =json.load(f)
+            data = json.load(f)
             if isinstance(data, list):
                 return data
             else:
@@ -24,11 +25,11 @@ def read_operations_json(path: str) -> list[dict[str, Any]]:
     return []
 
 
-if __name__ == "__main__":
-    from pprint import pprint
-
-    current_dir = os.path.dirname(os.path.dirname(__file__))
-    path = os.path.join(current_dir, "data", "operations.json")
-
-    result = read_operations_json(path)
-    pprint(result)
+# if __name__ == "__main__":
+#     from pprint import pprint
+#
+#     current_dir = os.path.dirname(os.path.dirname(__file__))
+#     path = os.path.join(current_dir, "data", "operations.json")
+#
+#     result = read_operations_json(path)
+#     pprint(result)
