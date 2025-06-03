@@ -1,6 +1,7 @@
 import pytest
-from scr.generators import card_number_generator
+
 from scr.decorators import log
+from scr.generators import card_number_generator
 
 # ===========================
 # ====== Тесты для log ======
@@ -18,7 +19,7 @@ def test_regular_function_success(capsys):
     captured = capsys.readouterr()
 
     assert result == 5
-    assert "The add ok" in captured.out
+    assert "The add works\n" in captured.out
 
 
 # ====== ОБЫЧНАЯ ФУНКЦИЯ ДЛЯ ТЕСТА ОШИБКИ ======
@@ -82,7 +83,7 @@ def test_log_to_file_success(temp_log_file):
         log_output = f.read()
 
     assert result == 30
-    assert "The add_numbers ok" in log_output
+    assert "The add_numbers works\n" in log_output
 
 
 def test_log_to_file_generator_error(temp_log_file):

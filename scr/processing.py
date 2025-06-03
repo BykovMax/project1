@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Dict, List
 
-from scr.decorators import log
+# from scr.decorators import log
 
 
 # @log(filename="mylog.txt")
@@ -34,6 +34,7 @@ def sort_by_date(list_dict: List[Dict], reverse: bool = True) -> List[Dict]:
     :return: Новый список, отсортированный по дате.
     """
     return sorted(list_dict, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
+
 
 #
 # mixed_state_data = [

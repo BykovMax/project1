@@ -2,7 +2,7 @@ import functools
 from typing import Any, Callable, Iterator, Optional
 
 
-def log(filename: Optional[str] = None) ->  Callable:
+def log(filename: Optional[str] = None) -> Callable:
     """
     Декоратор логирует результат выполнения функции.
     Если аргумент filename передан, то записываются логи в файл, если нет — выводится в консоль.
@@ -25,7 +25,7 @@ def log(filename: Optional[str] = None) ->  Callable:
                 if isinstance(result, Iterator):
                     is_generator = True
 
-                    def generator_wrapper()-> Iterator[Any]:
+                    def generator_wrapper() -> Iterator[Any]:
                         try:
                             for value in result:
                                 yield value
