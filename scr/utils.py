@@ -14,7 +14,11 @@ log_path = os.path.join(log_dir, "utils.log")
 
 # Handler + Formatter
 file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
-formatter = logging.Formatter("%(asctime)s | %(name)s | %(levelname)s | %(message)s")
+formatter = logging.Formatter("%(asctime)s |"
+                              " модуль %(filename)s |"
+                              " функция %(funcName)s |"
+                              " уровень %(levelname)s |"
+                              " %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -39,7 +43,6 @@ def read_operations_json(path: str) -> list[dict[str, Any]]:
     except json.JSONDecodeError:
         logger.error(f"Неверный формат JSON в файле: {path}")
     return []
-
 
 # if __name__ == "__main__":
 #     from pprint import pprint
