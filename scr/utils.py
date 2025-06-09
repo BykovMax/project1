@@ -1,6 +1,4 @@
 import json
-
-# import os
 from typing import Any
 
 
@@ -27,6 +25,7 @@ def read_operations_json(path: str) -> list[dict[str, Any]]:
 
 # if __name__ == "__main__":
 #     from pprint import pprint
+#     import os
 #
 #     current_dir = os.path.dirname(os.path.dirname(__file__))
 #     path = os.path.join(current_dir, "data", "operations.json")
