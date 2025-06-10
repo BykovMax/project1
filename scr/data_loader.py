@@ -33,15 +33,15 @@ def read_transactions_excel(path: str) -> List[Dict]:
         return []
 
 
-if __name__ == "__main__":
-    import os
-    from pprint import pprint
-
-    current_dir = os.path.dirname(os.path.dirname(__file__))
-    csv_path = os.path.join(current_dir, "data", "transactions.csv")
-    excel_path = os.path.join(current_dir, "data", "transactions_excel.xlsx")
-
-    print("CSV:")
-    pprint(read_transactions_csv(csv_path))
-    print("Excel:")
-    pprint(read_transactions_excel(excel_path))
+# if __name__ == "__main__":
+#     import os
+#     from pprint import pprint
+#
+#     current_dir = os.path.dirname(os.path.dirname(__file__))
+#     csv_path = os.path.join(current_dir, "data", "transactions.csv")
+#     excel_path = os.path.join(current_dir, "data", "transactions_excel.xlsx")
+#
+#     print("CSV:")
+#     pprint(read_transactions_csv(csv_path))
+#     print("Excel:")
+#     pprint(read_transactions_excel(excel_path))
