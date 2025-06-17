@@ -1,6 +1,6 @@
 import pytest
 
-from scr.processing import filter_by_state, sort_by_date
+from scr.processing import filter_by_currency, filter_by_state, sort_by_date
 
 # ===================================
 # ====== Тесты filter_by_state ======
@@ -70,3 +70,23 @@ def test_sort_by_date_same_dates():
 def test_sort_by_date_invalid_format(invalid_date):
     with pytest.raises(ValueError):
         sort_by_date(invalid_date)
+
+
+# ======================================
+# ====== Тесты filter_by_currency ======
+# ======================================
+
+
+@pytest.mark.parametrize(
+    "currency, expected_count, expected_codes",
+    [
+        ("RUB", 2, {"RUB"}),
+        ("USD", 3, {"USD"}),
+        ("EUR", 0, set()),
+    ],
+)
+def test_filter_by_currency_param(transactions, currency, expected_count, expected_codes):
+    result = filter_by_currency(transactions, currency)
+    assert isinstance(result, list)
+    assert len(result) == expected_count
+    assert {tx.get("operationAmount", {}).get("currency", {}).get("code") for tx in result} <= expected_codes

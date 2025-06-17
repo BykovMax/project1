@@ -3,7 +3,7 @@ import logging
 import os
 from typing import Any
 
-# ====== Настройка логгера модуля utils ======
+# ====== Настройка логера модуля utils ======
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 
@@ -14,11 +14,9 @@ log_path = os.path.join(log_dir, "utils.log")
 
 # Handler + Formatter
 file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
-formatter = logging.Formatter("%(asctime)s |"
-                              " модуль %(filename)s |"
-                              " функция %(funcName)s |"
-                              " уровень %(levelname)s |"
-                              " %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s |" " модуль %(filename)s |" " функция %(funcName)s |" " уровень %(levelname)s |" " %(message)s"
+)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -43,6 +41,34 @@ def read_operations_json(path: str) -> list[dict[str, Any]]:
     except json.JSONDecodeError:
         logger.error(f"Неверный формат JSON в файле: {path}")
     return []
+
+
+def get_unique_descriptions(transactions: list[dict]) -> set[str]:
+    """
+    Возвращает уникальные строки из поля 'description' всех операций.
+    """
+    return {
+        tx["description"].strip()
+        for tx in transactions
+        if "description" in tx and isinstance(tx["description"], str)
+    }
+
+
+def generate_mapping_from_descriptions(transactions: list[dict]) -> dict[str, str]:
+    """
+    Генерирует mapping вида {описание: описание}, чтобы вручную потом заменить категории.
+    """
+    return {desc: desc for desc in get_unique_descriptions(transactions)}
+
+
+def find_unmapped_descriptions(transactions: list[dict], mapping: dict[str, str]) -> set[str]:
+    """
+    Находит описания транзакций, которых нет в CATEGORY_MAPPING.
+    """
+    all_desc = get_unique_descriptions(transactions)
+    known = {key.lower() for key in mapping}
+    return {desc for desc in all_desc if desc.lower() not in known}
+
 
 # if __name__ == "__main__":
 #     from pprint import pprint

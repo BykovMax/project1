@@ -36,6 +36,15 @@ def sort_by_date(list_dict: List[Dict], reverse: bool = True) -> List[Dict]:
     return sorted(list_dict, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
 
 
+def filter_by_currency(transactions: list[dict], currency_code: str) -> list[dict]:
+    """
+    Фильтрует транзакции по коду валюты (например, "RUB").
+    """
+    return [
+        tx for tx in transactions if tx.get("operationAmount", {}).get("currency", {}).get("code") == currency_code
+    ]
+
+
 #
 # mixed_state_data = [
 #     {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
