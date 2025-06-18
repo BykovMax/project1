@@ -16,7 +16,7 @@ from scr.external_api import convert_to_rub
         ({"amount": 66.6, "currency": "USD"}, {"rates": {"RUB": 79.13}}, 5270.06, False),
         ({"amount": 77.7, "currency": "EUR"}, {"rates": {"RUB": 90.38}}, 7022.53, False),
         ({"amount": 100, "currency": "CNY"}, None, None, True),
-    ]
+    ],
 )
 @patch("scr.external_api.requests.get")
 def test_convert_to_rub(mock_get, transaction, mock_response, expected, should_raise):

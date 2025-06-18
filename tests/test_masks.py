@@ -1,6 +1,6 @@
 import pytest
 
-from scr.masks import get_mask_account, get_mask_card_number
+from scr.masks import get_mask_account, get_mask_card_number, mask_entity
 
 # ============================================
 # ====== Тесты для get_mask_card_number ======
@@ -54,3 +54,36 @@ def test_get_mask_account(number_account):
 def test_invalid_number_account(invalid_account):
     with pytest.raises(ValueError):
         get_mask_account(invalid_account)
+
+
+# ===================================
+# ====== Тесты для mask_entity ======
+# ===================================
+
+
+@pytest.mark.parametrize(
+    "input_value, expected_output",
+    [
+        # Счета
+        ("Счет 73654108430135874305", "Счет **4305"),
+        ("Счет 11112222333344445555", "Счет **5555"),
+
+        # Карты
+        ("Visa 7000792289606361", "Visa 7000 79** **** 6361"),
+        ("Mastercard 7771271189203727", "Mastercard 7771 27** **** 3727"),
+
+        # Некорректные номера (должны остаться как есть)
+        ("Visa abcdef", "Visa abcdef"),
+        ("Счет 123", "Счет 123"),
+
+        # Другие типы данных
+        (None, ""),  # None → пустая строка
+        (12345, ""),  # число → пустая строка
+        (float("nan"), ""),  # float → пустая строка
+
+        # Неизвестный формат
+        ("PayPal user123", "PayPal user123"),
+    ],
+)
+def test_mask_entity(input_value, expected_output):
+    assert mask_entity(input_value) == expected_output

@@ -2,7 +2,8 @@ import json
 
 import pytest
 
-from scr.utils import read_operations_json
+from scr.utils import (ask_yes_no, find_unmapped_descriptions, generate_mapping_from_descriptions,
+                       get_unique_descriptions, read_operations_json)
 
 # ========================================
 # ====== Тесты read_operations_json ======
@@ -28,3 +29,70 @@ def test_read_json_file(tmp_path, file_content, expected_result, description):
 
     result = read_operations_json(file_to_read)
     assert result == expected_result, f"Failed case: {description}"
+
+
+# ============================================
+# ====== Тесты  get_unique_descriptions ======
+# ============================================
+
+
+def test_get_unique_descriptions():
+    data = [
+        {"description": "A"},
+        {"description": "B"},
+        {"description": "A"},
+        {"description": " "},
+        {"description": None},
+        {},
+    ]
+    result = get_unique_descriptions(data)
+    assert result == {"A", "B", ""}
+
+
+# ======================================================
+# ====== Тесты generate_mapping_from_descriptions ======
+# ======================================================
+
+
+def test_generate_mapping_from_descriptions():
+    data = [{"description": "Test1"}, {"description": "Test2"}]
+    result = generate_mapping_from_descriptions(data)
+    assert result == {"Test1": "Test1", "Test2": "Test2"}
+
+
+# ===============================================
+# ====== Тесты  find_unmapped_descriptions ======
+# ===============================================
+
+
+def test_find_unmapped_descriptions():
+    data = [
+        {"description": "Оплата налогов"},
+        {"description": "Перевод организации"},
+        {"description": "Открытие вклада"},
+    ]
+    mapping = {"перевод организации": "Организации", "открытие вклада": "Вклады"}
+    result = find_unmapped_descriptions(data, mapping)
+    assert "Оплата налогов" in result
+    assert "Перевод организации" not in result
+
+
+# ==============================
+# ====== Тесты ask_yes_no ======
+# ==============================
+
+
+def test_ask_yes_no_yes(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "Да")
+    assert ask_yes_no("Подтвердите: ") is True
+
+
+def test_ask_yes_no_no(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "нет")
+    assert ask_yes_no("Подтвердите: ") is False
+
+
+def test_ask_yes_no_invalid_then_yes(monkeypatch):
+    inputs = iter(["может быть", "д"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    assert ask_yes_no("Подтвердите: ") is True

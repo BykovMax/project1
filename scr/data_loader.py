@@ -11,7 +11,8 @@ def read_transactions_csv(path: str) -> List[Dict]:
     :return: Список словарей с транзакциями.
     """
     try:
-        df = pd.read_csv(path)
+        df = pd.read_csv(path, sep=";", encoding="utf-8")
+        df.columns = df.columns.str.strip()
         return df.to_dict(orient="records")
     except Exception as e:
         print(f"Ошибка при чтении CSV-файла: {e}")
