@@ -3,7 +3,7 @@ from scr.data_loader import read_transactions_csv, read_transactions_excel
 from scr.filters import process_bank_operations, process_bank_search
 from scr.masks import mask_entity
 from scr.processing import filter_by_currency, filter_by_state, sort_by_date
-from scr.utils import get_unique_descriptions, read_operations_json
+from scr.utils import ask_yes_no, get_unique_descriptions, read_operations_json
 
 
 def main():
@@ -44,13 +44,22 @@ def main():
             print(f"Статус операции '{state}' недоступен.")
 
     # ===== Сортировка по дате =====
-    if input("Отсортировать по дате? Да/Нет: ").strip().lower() == "да":
-        direction = input("По возрастанию или по убыванию?: ").strip().lower()
-        reverse = direction == "по убыванию"
+    if ask_yes_no("Отсортировать по дате? Да/Нет: "):
+        while True:
+            direction = input("По возрастанию или по убыванию?: ").strip().lower()
+            if direction in ("по возрастанию", "возрастание"):
+                reverse = False
+                break
+            elif direction in ("по убыванию", "убывание"):
+                reverse = True
+                break
+            else:
+                print('Некорректный ввод. Введите "по возрастанию" или "по убыванию".')
+
         filtered = sort_by_date(filtered, reverse)
 
     # ===== Фильтрация только по рублям =====
-    if input("Выводить только рублевые транзакции? Да/Нет: ").strip().lower() == "да":
+    if ask_yes_no("Выводить только рублевые транзакции? Да/Нет: "):
         filtered = filter_by_currency(filtered, "RUB")
 
     if not filtered:
@@ -58,20 +67,25 @@ def main():
         return
 
     # ===== Фильтрация по ключевому слову =====
-    if input("Отфильтровать по слову в описании? Да/Нет: ").strip().lower() == "да":
+    if ask_yes_no("Отфильтровать по слову в описании? Да/Нет: "):
         descriptions = get_unique_descriptions(filtered)
         print(f"\nВсего найдено описаний: {len(descriptions)}")
 
-        if descriptions:
-            print("Возможные ключевые слова из поля 'description':")
-            for desc in sorted(descriptions):
-                print(f"- {desc}")
-        else:
+        if not descriptions:
             print("Нет доступных описаний для фильтрации.")
             return
 
-        keyword = input("\nВведите ключевое слово для фильтрации по описанию: ").strip()
-        filtered = process_bank_search(filtered, keyword)
+        print("Возможные ключевые слова из поля 'description':")
+        for desc in sorted(descriptions):
+            print(f"- {desc}")
+
+        while True:
+            keyword = input("\nВведите ключевое слово для фильтрации по описанию: ").strip().capitalize()
+            if keyword in descriptions:
+                filtered = process_bank_search(filtered, keyword)
+                break
+            else:
+                print(f'Категория "{keyword}" не найдена в списке. Попробуйте ещё раз.')
 
     # ===== Вывод результата =====
     print("\nРаспечатываю итоговый список транзакций...")

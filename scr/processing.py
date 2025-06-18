@@ -1,5 +1,7 @@
-from datetime import datetime
 from typing import Dict, List
+
+import pytz
+from dateutil import parser
 
 # from scr.decorators import log
 
@@ -33,7 +35,16 @@ def sort_by_date(list_dict: List[Dict], reverse: bool = True) -> List[Dict]:
     :param reverse: Направление сортировки (по убыванию по умолчанию).
     :return: Новый список, отсортированный по дате.
     """
-    return sorted(list_dict, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
+
+    # Преобразуем строку даты в datetime объект с временной зоной (если её нет, устанавливаем UTC)
+    def parse_date(date_str):
+        dt = parser.parse(date_str)
+        if dt.tzinfo is None:
+            # Если дата без временной зоны, добавляем UTC
+            dt = dt.replace(tzinfo=pytz.UTC)
+        return dt
+
+    return sorted(list_dict, key=lambda x: parse_date(x["date"]), reverse=reverse)
 
 
 def filter_by_currency(transactions: list[dict], currency_code: str) -> list[dict]:

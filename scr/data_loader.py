@@ -33,6 +33,7 @@ def read_transactions_excel(path: str) -> List[Dict]:
         print(f"Ошибка при чтении Excel-файла: {e}")
         return []
 
+
 # if __name__ == "__main__":
 #     import os
 #     from pprint import pprint

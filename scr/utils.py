@@ -48,9 +48,7 @@ def get_unique_descriptions(transactions: list[dict]) -> set[str]:
     Возвращает уникальные строки из поля 'description' всех операций.
     """
     return {
-        tx["description"].strip()
-        for tx in transactions
-        if "description" in tx and isinstance(tx["description"], str)
+        tx["description"].strip() for tx in transactions if "description" in tx and isinstance(tx["description"], str)
     }
 
 
@@ -68,6 +66,21 @@ def find_unmapped_descriptions(transactions: list[dict], mapping: dict[str, str]
     all_desc = get_unique_descriptions(transactions)
     known = {key.lower() for key in mapping}
     return {desc for desc in all_desc if desc.lower() not in known}
+
+
+def ask_yes_no(prompt: str) -> bool:
+    """
+    Запрашивает у пользователя ввод 'да' или 'нет' с повтором при ошибке.
+    Возвращает True, если пользователь ответил 'да'.
+    """
+    while True:
+        answer = input(prompt).strip().lower()
+        if answer in ("да", "д", "yes", "y"):
+            return True
+        elif answer in ("нет", "н", "no", "n"):
+            return False
+        else:
+            print('Некорректный ввод. Введите "да" или "нет".')
 
 
 # if __name__ == "__main__":

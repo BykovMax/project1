@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from scr.utils import (find_unmapped_descriptions, generate_mapping_from_descriptions, get_unique_descriptions,
-                       read_operations_json)
+from scr.utils import (ask_yes_no, find_unmapped_descriptions, generate_mapping_from_descriptions,
+                       get_unique_descriptions, read_operations_json)
 
 # ========================================
 # ====== Тесты read_operations_json ======
@@ -75,3 +75,24 @@ def test_find_unmapped_descriptions():
     result = find_unmapped_descriptions(data, mapping)
     assert "Оплата налогов" in result
     assert "Перевод организации" not in result
+
+
+# ==============================
+# ====== Тесты ask_yes_no ======
+# ==============================
+
+
+def test_ask_yes_no_yes(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "Да")
+    assert ask_yes_no("Подтвердите: ") is True
+
+
+def test_ask_yes_no_no(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "нет")
+    assert ask_yes_no("Подтвердите: ") is False
+
+
+def test_ask_yes_no_invalid_then_yes(monkeypatch):
+    inputs = iter(["может быть", "д"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    assert ask_yes_no("Подтвердите: ") is True

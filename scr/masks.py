@@ -91,8 +91,9 @@ def mask_entity(entity: str) -> str:
         except ValueError:
             return entity
 
-    elif any(brand in entity for brand in
-             ["Visa", "Mastercard", "Maestro", "Discover", "American", "Platinum", "Classic"]):
+    elif any(
+        brand in entity for brand in ["Visa", "Mastercard", "Maestro", "Discover", "American", "Platinum", "Classic"]
+    ):
         parts = entity.split()
         if len(parts) >= 2:
             brand, number = parts[0], parts[-1]
@@ -102,6 +103,7 @@ def mask_entity(entity: str) -> str:
                 return entity
 
     return entity
+
 
 # if __name__ == "__main__":
 #     print(get_mask_card_number(5999414228426353))
